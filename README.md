@@ -63,7 +63,9 @@ Tablet, landscape and portrait will not show the same fields as desktop.
 ## TODO
 
 [x] - Create init of backend and frontend
-[ ] - create database models
+[x] - create database connection
+[x] - setup project folder structure
+[-] - create database models
 [ ] - add jwt auth
 [ ] - create api endpoints
 [ ] - language

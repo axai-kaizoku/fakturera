@@ -1,10 +1,11 @@
 import express from "express";
+import routes from "./routes/v1/index.js";
 
 const app = express();
 
-app.use("/", (req, res) => {
-  res.json({ message: "Hello World!" });
-});
+app.use(express.json());
+
+app.use("/api/v1", routes);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

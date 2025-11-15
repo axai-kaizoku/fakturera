@@ -12,20 +12,19 @@ export const ToggleLanguage = () => {
           if (prev === "en") return "sv";
           else return "en";
         });
-
         setTranslations(
           language === "en"
             ? {
-                lang: "en",
-                translations: {
-                  "login.title": "Login",
+                lang: "sv",
+                login: {
+                  title: "Logga in",
                 },
                 page: "login",
               }
             : {
-                lang: "sv",
-                translations: {
-                  "login.title": "Logga in",
+                lang: "en",
+                login: {
+                  title: "Login",
                 },
                 page: "login",
               }
@@ -33,8 +32,8 @@ export const ToggleLanguage = () => {
       }}
       // style={{ display: "flex", gap: "10px", alignItems: "center" }}
     >
-      {language === "en" ? "Svenska" : "English"}
-      <img src={language === "en" ? SWEDISH_FLAG : UK_FLAG} alt="language" width={20} height={15} />
+      {language === "en" ? "English" : "Svenska"}
+      <img src={language === "en" ? UK_FLAG : SWEDISH_FLAG} alt="language" width={20} height={15} />
     </button>
   );
 };

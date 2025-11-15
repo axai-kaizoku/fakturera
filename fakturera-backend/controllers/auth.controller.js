@@ -93,3 +93,10 @@ export const signup = async (req, res) => {
     res.status(500).json({ error: "Server error during signup" });
   }
 };
+
+export const verifyToken = async (req, res) => {
+  res.json({
+    valid: true,
+    user: req.user,
+  });
+};

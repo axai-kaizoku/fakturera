@@ -2,33 +2,13 @@ import { SWEDISH_FLAG, UK_FLAG } from "../consts/index.js";
 import { useLanguage } from "../hooks/use-language";
 
 export const ToggleLanguage = () => {
-  const { language, setLanguage, setTranslations } = useLanguage();
+  const { language, changeLanguage } = useLanguage();
   // console.log(language);
 
   return (
     <button
       onClick={() => {
-        setLanguage((prev) => {
-          if (prev === "en") return "sv";
-          else return "en";
-        });
-        setTranslations(
-          language === "en"
-            ? {
-                lang: "sv",
-                login: {
-                  title: "Logga in",
-                },
-                page: "login",
-              }
-            : {
-                lang: "en",
-                login: {
-                  title: "Login",
-                },
-                page: "login",
-              }
-        );
+        changeLanguage(language === "en" ? "sv" : "en");
       }}
       // style={{ display: "flex", gap: "10px", alignItems: "center" }}
     >

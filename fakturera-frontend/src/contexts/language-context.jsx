@@ -5,7 +5,7 @@ import { useTranslationStore } from "../store";
 export const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(localStorage.getItem("lang") || "en");
   const [translations, setTranslations] = useState({});
   const cachedTranslations = useTranslationStore((store) => store.translation);
   const setCachedTranslations = useTranslationStore((store) => store.setTranslation);
@@ -26,13 +26,16 @@ export const LanguageProvider = ({ children }) => {
     setTranslations(data.data);
   };
 
+  const changeLanguage = (newLang) => {
+    setLanguage(newLang);
+    localStorage.setItem("lang", newLang);
+  };
+
   const t = (key, defaultValue) => {
     return translations[key] || defaultValue;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, setTranslations }}>
-      {children}
-    </LanguageContext.Provider>
+    <LanguageContext.Provider value={{ language, setLanguage, t, changeLanguage }}>{children}</LanguageContext.Provider>
   );
 };

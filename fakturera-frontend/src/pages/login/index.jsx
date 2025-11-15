@@ -1,31 +1,38 @@
-import { useRef } from "react";
-import { login } from "../../api/auth.js";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../../hooks/use-language.jsx";
+import { useAuth } from "../../hooks/use-auth.jsx";
 
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
 
   const { t } = useLanguage();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const res = await login(email, password);
 
-    if (res.error) {
-      setError(res.data);
-      return;
+    const result = await login(email, password);
+
+    if (!result.error) {
+      navigate("/");
+    } else {
+      setError(result.message);
     }
-    // need to save this in localStorage
-
-    navigate("/");
   };
+
   return (
     <div style={{ width: "100%" }}>
       <div

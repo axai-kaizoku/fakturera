@@ -1,34 +1,38 @@
-import { useRef } from "react";
-import { login } from "../../api/auth.js";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLanguage } from "../../hooks/use-language.jsx";
+import { useAuth } from "../../hooks/use-auth.jsx";
 
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
 
   const { t } = useLanguage();
 
-  // console.log(t);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const res = await login(email, password);
 
-    console.log(res);
-    if (res.error) {
-      setError(res.data);
-      return;
+    const result = await login(email, password);
+
+    if (!result.error) {
+      navigate("/");
+    } else {
+      setError(result.message);
     }
-    // need to save this in localStorage
-
-    navigate("/");
   };
+
   return (
     <div style={{ width: "100%" }}>
       <div
@@ -42,11 +46,36 @@ const Login = () => {
       >
         <h1>{t("login.title", "")}</h1>
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <input type="email" ref={emailRef} placeholder="email" required />
-          <input type="password" ref={passwordRef} placeholder="password" required />
-          {error ? <p style={{ color: "red", opacity: "50%" }}>{error}</p> : null}
-          <button type="submit">Login</button>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <label htmlFor="email">{t("login.email")}</label>
+            <input
+              type="email"
+              autoComplete="username"
+              ref={emailRef}
+              id="email"
+              name="email"
+              placeholder={t("login.emailAddress")}
+              required
+            />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <label htmlFor="password">{t("login.password")}</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autoComplete="current-password"
+              ref={passwordRef}
+              placeholder={t("login.password")}
+              required
+            />
+          </div>
+          {error ? <p style={{ color: "red", opacity: "50%" }}>{t("login.error")}</p> : null}
+          <button type="submit">{t("login.title")}</button>
         </form>
+
+        <button>{t("login.register")}</button>
+        <button>{t("login.forgottenPassword")}</button>
       </div>
     </div>
   );

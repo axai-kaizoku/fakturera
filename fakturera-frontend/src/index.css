@@ -18,13 +18,17 @@
 }
 
 button {
-  padding: 0.2rem 0.6rem;
+  padding: 0.65rem 0.8rem;
   border: 0.1rem solid #242424;
   border-radius: 0.3rem;
 }
 
 input {
-  padding: 0.4rem 0.6rem;
+  padding: 0.65rem 0.8rem;
   border-radius: 0.4rem;
   border: 1px solid white;
+}
+
+ul > li {
+  list-style: none;
 }

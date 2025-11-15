@@ -1,9 +1,8 @@
 import express from "express";
+import { getTranslations } from "../../controllers/translation.controller.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Languages");
-});
+router.get("/", getTranslations);
 
 export default router;

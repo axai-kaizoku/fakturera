@@ -1,12 +1,13 @@
-import { useEffect, useRef } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { useLanguage } from "../../hooks/use-language.jsx";
 import { useAuth } from "../../hooks/use-auth.jsx";
+import { useLanguage } from "../../hooks/use-language.jsx";
+import "./login.css";
 
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
@@ -21,6 +22,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
@@ -31,51 +33,42 @@ const Login = () => {
     } else {
       setError(result.message);
     }
+
+    setLoading(false);
   };
 
   return (
-    <div style={{ width: "100%" }}>
-      <div
-        style={{
-          width: "30rem",
-          margin: "2rem auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-        }}
-      >
-        <h1>{t("login.title", "")}</h1>
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="email">{t("login.email")}</label>
-            <input
-              type="email"
-              autoComplete="username"
-              ref={emailRef}
-              id="email"
-              name="email"
-              placeholder={t("login.emailAddress")}
-              required
-            />
+    <div className="login-container">
+      <div className="login-box">
+        <h1>{t("login.title")}</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>{t("login.emailLabel")}</label>
+            <input type="email" ref={emailRef} required placeholder={t("login.emailAddress")} autoComplete="username" />
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label htmlFor="password">{t("login.password")}</label>
+
+          <div className="form-group">
+            <label>{t("login.passwordLabel")}</label>
             <input
               type="password"
-              name="password"
-              id="password"
-              autoComplete="current-password"
               ref={passwordRef}
-              placeholder={t("login.password")}
               required
+              placeholder={t("login.password")}
+              autoComplete="current-password"
             />
           </div>
-          {error ? <p style={{ color: "red", opacity: "50%" }}>{t("login.error")}</p> : null}
-          <button type="submit">{t("login.title")}</button>
-        </form>
 
-        <button>{t("login.register")}</button>
-        <button>{t("login.forgottenPassword")}</button>
+          {error ? <p className="error-message">{t("login.error")}</p> : null}
+
+          <button type="submit" disabled={loading} className="login-button">
+            {loading ? "..." : t("login.button")}
+          </button>
+        </form>
+        <div className="forgotten-section">
+          <button className="login-register-btn">{t("login.register")}</button>
+          <button className="login-forgot-btn">{t("login.forgottenPassword")}</button>
+        </div>
       </div>
     </div>
   );

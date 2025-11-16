@@ -21,7 +21,7 @@ export const translations = pgTable("translations", {
 
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
-  acticleNo: varchar("acticle_no", { length: 100 }),
+  articleNo: varchar("article_no", { length: 100 }),
   productService: text("product_service").notNull(),
   inPrice: varchar("in_price", { length: 10 }),
   price: varchar("price", { length: 10 }),

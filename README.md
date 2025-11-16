@@ -66,13 +66,13 @@ Tablet, landscape and portrait will not show the same fields as desktop.
 [x] - create database connection
 [x] - setup project folder structure
 [x] - create database models
-[ ] - add jwt auth
-[ ] - create api endpoints
-[ ] - language
-[ ] - login
-[ ] - pricelist
+[x] - add jwt auth
+[x] - create api endpoints
+[x] - language
+[x] - login
+[x] - pricelist
 
-[ ] - frontend
-[ ] - add pages
-[ ] - integrate api endpoints
-[ ] - add styles
+[x] - frontend
+[x] - add pages
+[x] - integrate api endpoints
+[x] - add styles

@@ -7,6 +7,8 @@ import Home from "./pages/home/index.jsx";
 import Login from "./pages/login/index.jsx";
 import Terms from "./pages/terms/index.jsx";
 import { useAuth } from "./hooks/use-auth.jsx";
+import { Header } from "./components/header.jsx";
+import { Footer } from "./components/footer.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -33,11 +35,22 @@ let router = createBrowserRouter([
       },
       {
         path: "/terms",
-        element: <Terms />,
+        element: (
+          <>
+            <Header />
+            <Terms />
+          </>
+        ),
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <>
+            <Header />
+            <Login />
+            <Footer />
+          </>
+        ),
       },
     ],
     errorElement: <>Oops Route not found !!</>,
